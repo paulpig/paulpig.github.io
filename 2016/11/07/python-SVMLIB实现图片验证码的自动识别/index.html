@@ -4,14 +4,22 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>paulpig的博客</title>
+  <title>python+SVMLIB+opencv实现图片验证码的自动识别 | paulpig的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="paulpig的博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="识别的原理关键还是基于机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python+SVMLIB+opencv实现图片验证码的自动识别">
+<meta property="og:url" content="http://yoursite.com/2016/11/07/python-SVMLIB实现图片验证码的自动识别/index.html">
 <meta property="og:site_name" content="paulpig的博客">
+<meta property="og:description" content="识别的原理关键还是基于机器学习">
+<meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/hun.png">
+<meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/getpicture.png">
+<meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/removePoint.png">
+<meta property="og:updated_time" content="2016-11-07T10:41:37.115Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="paulpig的博客">
+<meta name="twitter:title" content="python+SVMLIB+opencv实现图片验证码的自动识别">
+<meta name="twitter:description" content="识别的原理关键还是基于机器学习">
+<meta name="twitter:image" content="http://obkykcznj.bkt.clouddn.com/hun.png">
   
     <link rel="alternative" href="/atom.xml" title="paulpig的博客" type="application/atom+xml">
   
@@ -124,9 +132,7 @@
 </nav>
 
       <div class="body-wrap">
-        
-  
-    <article id="post-python-svmlib-opencv实现图片验证码的自动识别" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-python-SVMLIB实现图片验证码的自动识别" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <input type="hidden" class="isFancy" />
@@ -135,8 +141,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/07/python-svmlib-opencv实现图片验证码的自动识别/">python+svmlib+opencv实现图片验证码的自动识别</a>
+    <h1 class="article-title" itemprop="name">
+      python+SVMLIB+opencv实现图片验证码的自动识别
     </h1>
   
 
@@ -145,15 +151,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>识别原理关键基于机器学习</p>
+<p>识别的原理关键还是基于机器学习</p>
 </blockquote>
-<font color="#DC143C" size="4"><a href="http://blog.csdn.net/mengyafei43/article/details/10338531" target="_blank" rel="external">python配置opencv网址</a></font><br><font color="#DC143C" size="4"><a href="http://blog.csdn.net/mengyafei43/article/details/10338531" target="_blank" rel="external">python配置SVMLIB网址</a></font>
-
-<h3 id="一、思想（基本步骤）"><a href="#一、思想（基本步骤）" class="headerlink" title="一、思想（基本步骤）"></a>一、思想（基本步骤）</h3><h4 id="1-获取训练样本（python“爬”取）"><a href="#1-获取训练样本（python“爬”取）" class="headerlink" title="1.获取训练样本（python“爬”取）"></a>1.获取训练样本（python“爬”取）</h4><h4 id="2-图片预处理（去噪声）"><a href="#2-图片预处理（去噪声）" class="headerlink" title="2.图片预处理（去噪声）"></a>2.图片预处理（去噪声）</h4><h4 id="3-图片分割（分割为单个数字）"><a href="#3-图片分割（分割为单个数字）" class="headerlink" title="3.图片分割（分割为单个数字）"></a>3.图片分割（分割为单个数字）</h4><h4 id="4-提取特征（每行黑色像素点构成的向量的协方差）"><a href="#4-提取特征（每行黑色像素点构成的向量的协方差）" class="headerlink" title="4.提取特征（每行黑色像素点构成的向量的协方差）"></a>4.提取特征（每行黑色像素点构成的向量的协方差）</h4><h4 id="5-训练（基于svmlib）"><a href="#5-训练（基于svmlib）" class="headerlink" title="5.训练（基于svmlib）"></a>5.训练（基于svmlib）</h4><h4 id="6-识别（基于svmlib）"><a href="#6-识别（基于svmlib）" class="headerlink" title="6.识别（基于svmlib）"></a>6.识别（基于svmlib）</h4><h3 id="二、获取训练样本"><a href="#二、获取训练样本" class="headerlink" title="二、获取训练样本"></a>二、获取训练样本</h3><blockquote>
-<p>图片验证码是来源于“湖南大学迎新系统”</p>
-</blockquote>
-<p><img src="http://obkykcznj.bkt.clouddn.com/hun.png" alt="湖南大学"></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">url=<span class="string">'http://yxxt.hnu.cn/VerifyCode.aspx?????'</span></div><div class="line">   f = open(<span class="string">"./picture/"</span>+str(i)+<span class="string">".png"</span>,<span class="string">"wb"</span>)</div><div class="line">   f.write(urllib2.urlopen(url).read())</div><div class="line">   f.close()</div></pre></td></tr></table></figure>
+<a id="more"></a> 以下是余下全文<br><br><br>### 一、思想（基本步骤）<br><br>#### 1.获取训练样本（python“爬”取）<br><br>#### 2.图片预处理（去噪声）<br><br>#### 3.图片分割（分割为单个数字）<br><br>#### 4.提取特征（每行黑色像素点构成的向量的协方差）<br><br>#### 5.训练（基于svmlib）<br><br>#### 6.识别（基于svmlib）<br><br>&gt; <em> <font color="#DC143C" size="4"><a href="http://blog.csdn.net/mengyafei43/article/details/10338531" target="_blank" rel="external">python配置opencv网址</a></font><br>&gt; </em> <font color="#DC143C" size="4"><a href="http://blog.csdn.net/mengyafei43/article/details/10338531" target="_blank" rel="external">python配置SVMLIB网址</a></font><br><br>### 二、获取训练样本<br><br>&gt; 图片验证码是来源于“湖南大学迎新系统”<br><br><br><img src="http://obkykcznj.bkt.clouddn.com/hun.png" alt="湖南大学"><br><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">url=<span class="string">'http://yxxt.hnu.cn/VerifyCode.aspx?????'</span></div><div class="line">   f = open(<span class="string">"./picture/"</span>+str(i)+<span class="string">".png"</span>,<span class="string">"wb"</span>)</div><div class="line">   f.write(urllib2.urlopen(url).read())</div><div class="line">   f.close()</div></pre></td></tr></table></figure>
 <p>代码分析：上述url是网站中获取验证码路径，并且将获取的图片保存到本地</p>
 <p><img src="http://obkykcznj.bkt.clouddn.com/getpicture.png" alt="获取图片"></p>
 <h3 id="三、图片预处理（去噪声）"><a href="#三、图片预处理（去噪声）" class="headerlink" title="三、图片预处理（去噪声）"></a>三、图片预处理（去噪声）</h3><font color="#DC143C" size="4">通过观察训练样本，发现噪声点的RGB都大于等于195</font>
@@ -176,8 +176,8 @@
     </div>
     <div class="article-info article-info-index">
       
-      <a href="/2016/11/07/python-svmlib-opencv实现图片验证码的自动识别/" class="archive-article-date">
-  	<time datetime="2016-11-07T10:43:56.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-07</time>
+      <a href="/2016/11/07/python-SVMLIB实现图片验证码的自动识别/" class="archive-article-date">
+  	<time datetime="2016-11-07T09:09:19.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-07</time>
 </a>
       
 	<div class="article-tag tagcloud">
@@ -192,72 +192,64 @@
   </div>
 </article>
 
-
-
-
-
-
-
-
-
-
   
-    <article id="post-基于贝叶斯变换的手写识别数字" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/02/基于贝叶斯变换的手写识别数字/">基于贝叶斯变换的手写识别数字（MFC+Opencv）</a>
-    </h1>
   
+    <a href="/2016/11/02/基于贝叶斯变换的手写识别数字/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">基于贝叶斯变换的手写识别数字（MFC+Opencv）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>基于贝叶斯手写识别的关键还是在于统计学</p>
-</blockquote>
-<p>
-        <p class="article-more-link">
-          <a class="article-more-a"  href="/2016/11/02/基于贝叶斯变换的手写识别数字/#more">more >></a>
-        </p>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      <a href="/2016/11/02/基于贝叶斯变换的手写识别数字/" class="archive-article-date">
-  	<time datetime="2016-11-02T15:34:12.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-02</time>
-</a>
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MFC/">MFC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opencv/">opencv</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图像处理/">图像处理</a></li></ul>
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
 	</div>
-
-      
-
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
 
 
 
 
 
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="python-SVMLIB实现图片验证码的自动识别" data-title="python+SVMLIB+opencv实现图片验证码的自动识别" data-url="http://yoursite.com/2016/11/07/python-SVMLIB实现图片验证码的自动识别/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"paulpig"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
 
 
 
-
-  
-  
 
 
       </div>
@@ -279,8 +271,8 @@
 		fancybox: true,
 		mathjax: false,
 		animate: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

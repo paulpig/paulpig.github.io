@@ -14,7 +14,7 @@
 <meta property="og:description" content="基于贝叶斯手写识别的关键还是在于统计学">
 <meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/tu%27xiang.png">
 <meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/2.png">
-<meta property="og:updated_time" content="2016-11-02T15:37:11.105Z">
+<meta property="og:updated_time" content="2016-11-07T10:41:18.048Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于贝叶斯变换的手写识别数字（MFC+Opencv）">
 <meta name="twitter:description" content="基于贝叶斯手写识别的关键还是在于统计学">
@@ -156,21 +156,30 @@
 <h3 id="一、什么是贝叶斯公式"><a href="#一、什么是贝叶斯公式" class="headerlink" title="一、什么是贝叶斯公式"></a>一、什么是贝叶斯公式</h3><p>P(Wi/X)=P(X/Wi)*P(Wi)/P(X)</p>
 <h3 id="二、贝叶斯公式和手写识别的关系（解释上述公式）"><a href="#二、贝叶斯公式和手写识别的关系（解释上述公式）" class="headerlink" title="二、贝叶斯公式和手写识别的关系（解释上述公式）"></a>二、贝叶斯公式和手写识别的关系（解释上述公式）</h3><blockquote>
 <ul>
-<li>Wi:分类器（<strong>相当于数字’0’类、数字’1’类等</strong>） 　　X：输入样本（<strong>相当于输入识别的图片，样本是由特征组成在，也就是样本和特征有时候是可以等价理解的</strong>）</li>
-<li>P(Wi/X):当前输入样本X，将样本X归到Wi类的概率值。<font color="#DC143C">（越大，说明越有可能归到此类中）</font></li>
-<li>P(X/Wi):在Wi类下面，样本值（特征）为X的概率。<font color="#DC143C">（已知一个人，此人有头发（特征）的概率）</font></li>
-<li>P(Wi):Wi类下的样本数目占总样本数目的百分比<font color="#DC143C">(训练样本中，数字’0’类的样本数目有100张，总的样本数目为1000张，那么P(Wi)=100/1000)</font></li>
-<li>P(X):可以展开为<code>P(X/W1)*P(W1)+P(X/W2)*P(W2)+······+P(X/Wi)*P(Wi)</code>,某个样本（特征）的概率总和</li>
+<li><p>Wi:分类器（<strong>相当于数字’0’类、数字’1’类等</strong>） 　　X：输入样本（<strong>相当于输入识别的图片，样本是由特征组成在，也就是样本和特征有时候是可以等价理解的</strong>）</p>
+</li>
+<li><p>P(Wi/X):当前输入样本X，将样本X归到Wi类的概率值。<font color="#DC143C">（越大，说明越有可能归到此类中）</font></p>
+</li>
+<li><p>P(X/Wi):在Wi类下面，样本值（特征）为X的概率。<font color="#DC143C">（已知一个人，此人有头发（特征）的概率）</font></p>
+</li>
+<li><p>P(Wi):Wi类下的样本数目占总样本数目的百分比<font color="#DC143C">(训练样本中，数字’0’类的样本数目有100张，总的样本数目为1000张，那么P(Wi)=100/1000)</font></p>
+</li>
+<li><p>P(X):可以展开为<code>P(X/W1)*P(W1)+P(X/W2)*P(W2)+······+P(X/Wi)*P(Wi)</code>,某个样本（特征）的概率总和</p>
+</li>
 </ul>
 </blockquote>
 <h3 id="三、具体实现步骤"><a href="#三、具体实现步骤" class="headerlink" title="三、具体实现步骤"></a>三、具体实现步骤</h3><h4 id="1-预处理"><a href="#1-预处理" class="headerlink" title="1.预处理"></a>1.预处理</h4><p>采用的是只是添加了一个高斯过滤器（GaussianBlur）</p>
 <h4 id="2-图像分割"><a href="#2-图像分割" class="headerlink" title="2.图像分割"></a>2.图像分割</h4><p>图像分割成7*7个子区域，每个子区域就是一个特征。</p>
 <h4 id="3-特征提取"><a href="#3-特征提取" class="headerlink" title="3.特征提取"></a>3.特征提取</h4><p>图像在上一步中已经分割成7<em>7个子区域，每块区域的黑色像素点多于总的黑色像素点在每块区域的均值（总的像素点/（7</em>7））就设置为1，反之设置为0；<font color="#DC143C">（此处的阈值可以自定义，不一定是要均值，但是可以参考均值）</font></p>
 <h4 id="4-图像训练"><a href="#4-图像训练" class="headerlink" title="4.图像训练"></a>4.图像训练</h4><p><strong>训练关键的两个部分：</strong></p>
-<h5 id="1-P-X-wi-的计算：由于X代表的特征向量，我们暂且将每个特征都假定为独立变量，也就是P-X-wi-P-x1-wi-P-x2-wi-P-x3-wi-…………，现在我们的问题在于如何求解P-x1-wi-、P-x2-wi-等。在之前对训练样本做了特征提取之后，假定我们的样本数目为N，我们得到了N-25的矩阵，一行代表每张图像的特征向量，每列代表同一个特征，而我们要求的P-x1-wi-就是在同一列中指定的几行中值为1的数量除以指定的几行的行数。其中同一列代表了同一特征（x1），而制定的几行代表了是同一个分类（wi）。"><a href="#1-P-X-wi-的计算：由于X代表的特征向量，我们暂且将每个特征都假定为独立变量，也就是P-X-wi-P-x1-wi-P-x2-wi-P-x3-wi-…………，现在我们的问题在于如何求解P-x1-wi-、P-x2-wi-等。在之前对训练样本做了特征提取之后，假定我们的样本数目为N，我们得到了N-25的矩阵，一行代表每张图像的特征向量，每列代表同一个特征，而我们要求的P-x1-wi-就是在同一列中指定的几行中值为1的数量除以指定的几行的行数。其中同一列代表了同一特征（x1），而制定的几行代表了是同一个分类（wi）。" class="headerlink" title="1.P(X/wi)的计算：由于X代表的特征向量，我们暂且将每个特征都假定为独立变量，也就是P(X/wi)=P(x1/wi)* P(x2/wi)* P(x3/wi)*…………，现在我们的问题在于如何求解P(x1/wi)、P(x2/wi)等。在之前对训练样本做了特征提取之后，假定我们的样本数目为N，我们得到了N*25的矩阵，一行代表每张图像的特征向量，每列代表同一个特征，而我们要求的P(x1/wi)就是在同一列中指定的几行中值为1的数量除以指定的几行的行数。其中同一列代表了同一特征（x1），而制定的几行代表了是同一个分类（wi）。"></a>1.P(X/wi)的计算：由于X代表的特征向量，我们暂且将每个特征都假定为独立变量，也就是<code>P(X/wi)=P(x1/wi)* P(x2/wi)* P(x3/wi)*…………</code>，现在我们的问题在于如何求解<code>P(x1/wi)</code>、<code>P(x2/wi)</code>等。在之前对训练样本做了特征提取之后，假定我们的样本数目为N，我们得到了N*25的矩阵，一行代表每张图像的特征向量，每列代表同一个特征，而我们要求的P(x1/wi)就是在同一列中指定的几行中值为1的数量除以指定的几行的行数。其中同一列代表了同一特征（x1），而制定的几行代表了是同一个分类（wi）。</h5><h5 id="2-P-wi-的计算：这个相当简单的，就是每类的数量除以总样本的数量。"><a href="#2-P-wi-的计算：这个相当简单的，就是每类的数量除以总样本的数量。" class="headerlink" title="2.P(wi)的计算：这个相当简单的，就是每类的数量除以总样本的数量。"></a>2.P(wi)的计算：这个相当简单的，就是每类的数量除以总样本的数量。</h5><h4 id="5-图形识别"><a href="#5-图形识别" class="headerlink" title="5.图形识别"></a>5.图形识别</h4><p>分别计算<code>P(wi/X)</code>概率，哪类概率大就是判定为分到哪类中。<br>此处的关键点：<font color="#DC143C">首先将图像进行特征提取，当第j个特征值为1的时候的概率为<code>P(xj/wi)</code>，而当特征值为0的时候的概率为<code>1-P(xj/wi)</code>.(<code>P(xj/Wi)</code>已经在训练中计算出来)</font></p>
-<h3 id="四、界面展示"><a href="#四、界面展示" class="headerlink" title="四、界面展示"></a>四、界面展示</h3><p>识别界面<br><img src="http://obkykcznj.bkt.clouddn.com/tu%27xiang.png" alt="识别界面"></p>
-<p>识别成功界面<br><img src="http://obkykcznj.bkt.clouddn.com/2.png" alt="识别成功界面"></p>
-<h3 id="五、源代码下载"><a href="#五、源代码下载" class="headerlink" title="五、源代码下载"></a>五、源代码下载</h3><p><a href="https://github.com/paulpig/WriteHandRecognize" target="_blank" rel="external">手写识别数字源代码下载</a><br><a href="http://pan.baidu.com/s/1kUMnk83" target="_blank" rel="external">数字样本数据下载</a></p>
+<h5 id="1-P-X-wi-的计算：由于X代表的特征向量，我们暂且将每个特征都假定为独立变量，也就是P-X-wi-P-x1-wi-P-x2-wi-P-x3-wi-…………，现在我们的问题在于如何求解P-x1-wi-、P-x2-wi-等。在之前对训练样本做了特征提取之后，假定我们的样本数目为N，我们得到了N-25的矩阵，一行代表每张图像的特征向量，每列代表同一个特征，而我们要求的P-x1-wi-就是在同一列中指定的几行中值为1的数量除以指定的几行的行数。其中同一列代表了同一特征（x1），而制定的几行代表了是同一个分类（wi）。"><a href="#1-P-X-wi-的计算：由于X代表的特征向量，我们暂且将每个特征都假定为独立变量，也就是P-X-wi-P-x1-wi-P-x2-wi-P-x3-wi-…………，现在我们的问题在于如何求解P-x1-wi-、P-x2-wi-等。在之前对训练样本做了特征提取之后，假定我们的样本数目为N，我们得到了N-25的矩阵，一行代表每张图像的特征向量，每列代表同一个特征，而我们要求的P-x1-wi-就是在同一列中指定的几行中值为1的数量除以指定的几行的行数。其中同一列代表了同一特征（x1），而制定的几行代表了是同一个分类（wi）。" class="headerlink" title="1.P(X/wi)的计算：由于X代表的特征向量，我们暂且将每个特征都假定为独立变量，也就是P(X/wi)=P(x1/wi)* P(x2/wi)* P(x3/wi)*…………，现在我们的问题在于如何求解P(x1/wi)、P(x2/wi)等。在之前对训练样本做了特征提取之后，假定我们的样本数目为N，我们得到了N*25的矩阵，一行代表每张图像的特征向量，每列代表同一个特征，而我们要求的P(x1/wi)就是在同一列中指定的几行中值为1的数量除以指定的几行的行数。其中同一列代表了同一特征（x1），而制定的几行代表了是同一个分类（wi）。"></a>1.P(X/wi)的计算：由于X代表的特征向量，我们暂且将每个特征都假定为独立变量，也就是<code>P(X/wi)=P(x1/wi)* P(x2/wi)* P(x3/wi)*…………</code>，现在我们的问题在于如何求解<code>P(x1/wi)</code>、<code>P(x2/wi)</code>等。在之前对训练样本做了特征提取之后，假定我们的样本数目为N，我们得到了N*25的矩阵，一行代表每张图像的特征向量，每列代表同一个特征，而我们要求的P(x1/wi)就是在同一列中指定的几行中值为1的数量除以指定的几行的行数。其中同一列代表了同一特征（x1），而制定的几行代表了是同一个分类（wi）。</h5><h5 id="2-P-wi-的计算：这个相当简单的，就是每类的数量除以总样本的数量。"><a href="#2-P-wi-的计算：这个相当简单的，就是每类的数量除以总样本的数量。" class="headerlink" title="2.P(wi)的计算：这个相当简单的，就是每类的数量除以总样本的数量。"></a>2.P(wi)的计算：这个相当简单的，就是每类的数量除以总样本的数量。</h5><h4 id="5-图形识别"><a href="#5-图形识别" class="headerlink" title="5.图形识别"></a>5.图形识别</h4><p>分别计算<code>P(wi/X)</code>概率，哪类概率大就是判定为分到哪类中。</p>
+<p>此处的关键点：<font color="#DC143C">首先将图像进行特征提取，当第j个特征值为1的时候的概率为<code>P(xj/wi)</code>，而当特征值为0的时候的概率为<code>1-P(xj/wi)</code>.(<code>P(xj/Wi)</code>已经在训练中计算出来)</font></p>
+<h3 id="四、界面展示"><a href="#四、界面展示" class="headerlink" title="四、界面展示"></a>四、界面展示</h3><p>识别界面</p>
+<p><img src="http://obkykcznj.bkt.clouddn.com/tu%27xiang.png" alt="识别界面"></p>
+<p>识别成功界面</p>
+<p><img src="http://obkykcznj.bkt.clouddn.com/2.png" alt="识别成功界面"></p>
+<h3 id="五、源代码下载"><a href="#五、源代码下载" class="headerlink" title="五、源代码下载"></a>五、源代码下载</h3><p><a href="https://github.com/paulpig/WriteHandRecognize" target="_blank" rel="external">手写识别数字源代码下载</a></p>
+<p><a href="http://pan.baidu.com/s/1kUMnk83" target="_blank" rel="external">数字样本数据下载</a></p>
 
       
     </div>
@@ -195,11 +204,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2016/11/03/欢迎使用 Cmd Markdown 编辑阅读器/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/11/07/python-svmlib-opencv实现图片验证码的自动识别/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          (no title)
+          python+svmlib+opencv实现图片验证码的自动识别
         
       </div>
     </a>
@@ -312,7 +321,7 @@
     
     	<section class="tools-section tools-section-tag">
     			<div class="widget tagcloud" id="js-tagcloud">
-    				<a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/opencv/" style="font-size: 10px;">opencv</a> <a href="/tags/图像处理/" style="font-size: 10px;">图像处理</a>
+    				<a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/opencv/" style="font-size: 20px;">opencv</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/图像处理/" style="font-size: 10px;">图像处理</a>
     			</div>
     	</section>
     
