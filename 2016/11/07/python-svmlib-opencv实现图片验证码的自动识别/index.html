@@ -6,43 +6,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>python+svmlib+opencv实现图片验证码的自动识别 | paulpig的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="识别原理关键基于机器学习
-
-python配置opencv网址python配置SVMLIB网址
-
-一、思想（基本步骤）1.获取训练样本（python“爬”取）2.图片预处理（去噪声）3.图片分割（分割为单个数字）4.提取特征（每行黑色像素点构成的向量的协方差）5.训练（基于svmlib）6.识别（基于svmlib）二、获取训练样本
-图片验证码是来源于“湖南大学迎新系统”
-
-
-1234url=&apos;ht">
+  <meta name="description" content="识别原理关键基于机器学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python+svmlib+opencv实现图片验证码的自动识别">
 <meta property="og:url" content="http://yoursite.com/2016/11/07/python-svmlib-opencv实现图片验证码的自动识别/index.html">
 <meta property="og:site_name" content="paulpig的博客">
-<meta property="og:description" content="识别原理关键基于机器学习
-
-python配置opencv网址python配置SVMLIB网址
-
-一、思想（基本步骤）1.获取训练样本（python“爬”取）2.图片预处理（去噪声）3.图片分割（分割为单个数字）4.提取特征（每行黑色像素点构成的向量的协方差）5.训练（基于svmlib）6.识别（基于svmlib）二、获取训练样本
-图片验证码是来源于“湖南大学迎新系统”
-
-
-1234url=&apos;ht">
+<meta property="og:description" content="识别原理关键基于机器学习">
 <meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/hun.png">
 <meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/getpicture.png">
 <meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/removePoint.png">
-<meta property="og:updated_time" content="2016-11-07T11:04:32.735Z">
+<meta property="og:updated_time" content="2017-01-18T08:54:26.577Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python+svmlib+opencv实现图片验证码的自动识别">
-<meta name="twitter:description" content="识别原理关键基于机器学习
-
-python配置opencv网址python配置SVMLIB网址
-
-一、思想（基本步骤）1.获取训练样本（python“爬”取）2.图片预处理（去噪声）3.图片分割（分割为单个数字）4.提取特征（每行黑色像素点构成的向量的协方差）5.训练（基于svmlib）6.识别（基于svmlib）二、获取训练样本
-图片验证码是来源于“湖南大学迎新系统”
-
-
-1234url=&apos;ht">
+<meta name="twitter:description" content="识别原理关键基于机器学习">
 <meta name="twitter:image" content="http://obkykcznj.bkt.clouddn.com/hun.png">
   
     <link rel="alternative" href="/atom.xml" title="paulpig的博客" type="application/atom+xml">
@@ -177,13 +153,7 @@ python配置opencv网址python配置SVMLIB网址
         <blockquote>
 <p>识别原理关键基于机器学习</p>
 </blockquote>
-<font color="#DC143C" size="4"><a href="http://blog.csdn.net/mengyafei43/article/details/10338531" target="_blank" rel="external">python配置opencv网址</a></font><br><font color="#DC143C" size="4"><a href="http://blog.csdn.net/mengyafei43/article/details/10338531" target="_blank" rel="external">python配置SVMLIB网址</a></font>
-
-<h3 id="一、思想（基本步骤）"><a href="#一、思想（基本步骤）" class="headerlink" title="一、思想（基本步骤）"></a>一、思想（基本步骤）</h3><h4 id="1-获取训练样本（python“爬”取）"><a href="#1-获取训练样本（python“爬”取）" class="headerlink" title="1.获取训练样本（python“爬”取）"></a>1.获取训练样本（python“爬”取）</h4><h4 id="2-图片预处理（去噪声）"><a href="#2-图片预处理（去噪声）" class="headerlink" title="2.图片预处理（去噪声）"></a>2.图片预处理（去噪声）</h4><h4 id="3-图片分割（分割为单个数字）"><a href="#3-图片分割（分割为单个数字）" class="headerlink" title="3.图片分割（分割为单个数字）"></a>3.图片分割（分割为单个数字）</h4><h4 id="4-提取特征（每行黑色像素点构成的向量的协方差）"><a href="#4-提取特征（每行黑色像素点构成的向量的协方差）" class="headerlink" title="4.提取特征（每行黑色像素点构成的向量的协方差）"></a>4.提取特征（每行黑色像素点构成的向量的协方差）</h4><h4 id="5-训练（基于svmlib）"><a href="#5-训练（基于svmlib）" class="headerlink" title="5.训练（基于svmlib）"></a>5.训练（基于svmlib）</h4><h4 id="6-识别（基于svmlib）"><a href="#6-识别（基于svmlib）" class="headerlink" title="6.识别（基于svmlib）"></a>6.识别（基于svmlib）</h4><h3 id="二、获取训练样本"><a href="#二、获取训练样本" class="headerlink" title="二、获取训练样本"></a>二、获取训练样本</h3><blockquote>
-<p>图片验证码是来源于“湖南大学迎新系统”</p>
-</blockquote>
-<p><img src="http://obkykcznj.bkt.clouddn.com/hun.png" alt="湖南大学"></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">url=<span class="string">'http://yxxt.hnu.cn/VerifyCode.aspx?????'</span></div><div class="line">   f = open(<span class="string">"./picture/"</span>+str(i)+<span class="string">".png"</span>,<span class="string">"wb"</span>)</div><div class="line">   f.write(urllib2.urlopen(url).read())</div><div class="line">   f.close()</div></pre></td></tr></table></figure>
+<a id="more"></a> 以下是余下全文<br><br><font color="#DC143C" size="4"><a href="http://blog.csdn.net/mengyafei43/article/details/10338531" target="_blank" rel="external">python配置opencv网址</a></font><br><font color="#DC143C" size="4"><a href="http://blog.csdn.net/mengyafei43/article/details/10338531" target="_blank" rel="external">python配置SVMLIB网址</a></font><br><br>### 一、思想（基本步骤）<br>#### 1.获取训练样本（python“爬”取）<br>#### 2.图片预处理（去噪声）<br>#### 3.图片分割（分割为单个数字）<br>#### 4.提取特征（每行黑色像素点构成的向量的协方差）<br>#### 5.训练（基于svmlib）<br>#### 6.识别（基于svmlib）<br><br><br>### 二、获取训练样本<br><br>&gt; 图片验证码是来源于“湖南大学迎新系统”<br><br><br><img src="http://obkykcznj.bkt.clouddn.com/hun.png" alt="湖南大学"><br><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">url=<span class="string">'http://yxxt.hnu.cn/VerifyCode.aspx?????'</span></div><div class="line">   f = open(<span class="string">"./picture/"</span>+str(i)+<span class="string">".png"</span>,<span class="string">"wb"</span>)</div><div class="line">   f.write(urllib2.urlopen(url).read())</div><div class="line">   f.close()</div></pre></td></tr></table></figure>
 <p>代码分析：上述url是网站中获取验证码路径，并且将获取的图片保存到本地</p>
 <p><img src="http://obkykcznj.bkt.clouddn.com/getpicture.png" alt="获取图片"></p>
 <h3 id="三、图片预处理（去噪声）"><a href="#三、图片预处理（去噪声）" class="headerlink" title="三、图片预处理（去噪声）"></a>三、图片预处理（去噪声）</h3><font color="#DC143C" size="4">通过观察训练样本，发现噪声点的RGB都大于等于195</font>
