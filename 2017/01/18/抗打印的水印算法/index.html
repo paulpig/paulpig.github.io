@@ -4,21 +4,29 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>基于贝叶斯变换的手写识别数字（MFC+Opencv） | paulpig的博客</title>
+  <title>抗打印的水印算法 | paulpig的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="基于贝叶斯手写识别的关键还是在于统计学">
+  <meta name="description" content="抗打印水印算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基于贝叶斯变换的手写识别数字（MFC+Opencv）">
-<meta property="og:url" content="http://yoursite.com/2016/11/02/基于贝叶斯变换的手写识别数字/index.html">
+<meta property="og:title" content="抗打印的水印算法">
+<meta property="og:url" content="http://yoursite.com/2017/01/18/抗打印的水印算法/index.html">
 <meta property="og:site_name" content="paulpig的博客">
-<meta property="og:description" content="基于贝叶斯手写识别的关键还是在于统计学">
-<meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/tu%27xiang.png">
-<meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/2.png">
-<meta property="og:updated_time" content="2016-11-07T10:41:18.048Z">
+<meta property="og:description" content="抗打印水印算法">
+<meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/in_watermasking.png">
+<meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/extra.png">
+<meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/origin.png">
+<meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/jnd.png">
+<meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/in.png">
+<meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/result.png">
+<meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/paishe.png">
+<meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/mesh.png">
+<meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/point.png">
+<meta property="og:image" content="http://obkykcznj.bkt.clouddn.com/getinfor.png">
+<meta property="og:updated_time" content="2017-01-18T08:45:08.899Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="基于贝叶斯变换的手写识别数字（MFC+Opencv）">
-<meta name="twitter:description" content="基于贝叶斯手写识别的关键还是在于统计学">
-<meta name="twitter:image" content="http://obkykcznj.bkt.clouddn.com/tu%27xiang.png">
+<meta name="twitter:title" content="抗打印的水印算法">
+<meta name="twitter:description" content="抗打印水印算法">
+<meta name="twitter:image" content="http://obkykcznj.bkt.clouddn.com/in_watermasking.png">
   
     <link rel="alternative" href="/atom.xml" title="paulpig的博客" type="application/atom+xml">
   
@@ -131,7 +139,7 @@
 </nav>
 
       <div class="body-wrap">
-        <article id="post-基于贝叶斯变换的手写识别数字" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-抗打印的水印算法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <input type="hidden" class="isFancy" />
@@ -141,7 +149,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      基于贝叶斯变换的手写识别数字（MFC+Opencv）
+      抗打印的水印算法
     </h1>
   
 
@@ -150,48 +158,35 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>基于贝叶斯手写识别的关键还是在于统计学</p>
+<p>抗打印水印算法</p>
 </blockquote>
 <p><a id="more"></a> 以下是余下全文</p>
-<h3 id="一、什么是贝叶斯公式"><a href="#一、什么是贝叶斯公式" class="headerlink" title="一、什么是贝叶斯公式"></a>一、什么是贝叶斯公式</h3><p>P(Wi/X)=P(X/Wi)*P(Wi)/P(X)</p>
-<h3 id="二、贝叶斯公式和手写识别的关系（解释上述公式）"><a href="#二、贝叶斯公式和手写识别的关系（解释上述公式）" class="headerlink" title="二、贝叶斯公式和手写识别的关系（解释上述公式）"></a>二、贝叶斯公式和手写识别的关系（解释上述公式）</h3><blockquote>
-<ul>
-<li><p>Wi:分类器（<strong>相当于数字’0’类、数字’1’类等</strong>） 　　X：输入样本（<strong>相当于输入识别的图片，样本是由特征组成在，也就是样本和特征有时候是可以等价理解的</strong>）</p>
-</li>
-<li><p>P(Wi/X):当前输入样本X，将样本X归到Wi类的概率值。<font color="#DC143C">（越大，说明越有可能归到此类中）</font></p>
-</li>
-<li><p>P(X/Wi):在Wi类下面，样本值（特征）为X的概率。<font color="#DC143C">（已知一个人，此人有头发（特征）的概率）</font></p>
-</li>
-<li><p>P(Wi):Wi类下的样本数目占总样本数目的百分比<font color="#DC143C">(训练样本中，数字’0’类的样本数目有100张，总的样本数目为1000张，那么P(Wi)=100/1000)</font></p>
-</li>
-<li><p>P(X):可以展开为<code>P(X/W1)*P(W1)+P(X/W2)*P(W2)+······+P(X/Wi)*P(Wi)</code>,某个样本（特征）的概率总和</p>
-</li>
-</ul>
-</blockquote>
-<h3 id="三、具体实现步骤"><a href="#三、具体实现步骤" class="headerlink" title="三、具体实现步骤"></a>三、具体实现步骤</h3><h4 id="1-预处理"><a href="#1-预处理" class="headerlink" title="1.预处理"></a>1.预处理</h4><p>采用的是只是添加了一个高斯过滤器（GaussianBlur）</p>
-<h4 id="2-图像分割"><a href="#2-图像分割" class="headerlink" title="2.图像分割"></a>2.图像分割</h4><p>图像分割成7*7个子区域，每个子区域就是一个特征。</p>
-<h4 id="3-特征提取"><a href="#3-特征提取" class="headerlink" title="3.特征提取"></a>3.特征提取</h4><p>图像在上一步中已经分割成7<em>7个子区域，每块区域的黑色像素点多于总的黑色像素点在每块区域的均值（总的像素点/（7</em>7））就设置为1，反之设置为0；<font color="#DC143C">（此处的阈值可以自定义，不一定是要均值，但是可以参考均值）</font></p>
-<h4 id="4-图像训练"><a href="#4-图像训练" class="headerlink" title="4.图像训练"></a>4.图像训练</h4><p><strong>训练关键的两个部分：</strong></p>
-<h5 id="1-P-X-wi-的计算：由于X代表的特征向量，我们暂且将每个特征都假定为独立变量，也就是P-X-wi-P-x1-wi-P-x2-wi-P-x3-wi-…………，现在我们的问题在于如何求解P-x1-wi-、P-x2-wi-等。在之前对训练样本做了特征提取之后，假定我们的样本数目为N，我们得到了N-25的矩阵，一行代表每张图像的特征向量，每列代表同一个特征，而我们要求的P-x1-wi-就是在同一列中指定的几行中值为1的数量除以指定的几行的行数。其中同一列代表了同一特征（x1），而制定的几行代表了是同一个分类（wi）。"><a href="#1-P-X-wi-的计算：由于X代表的特征向量，我们暂且将每个特征都假定为独立变量，也就是P-X-wi-P-x1-wi-P-x2-wi-P-x3-wi-…………，现在我们的问题在于如何求解P-x1-wi-、P-x2-wi-等。在之前对训练样本做了特征提取之后，假定我们的样本数目为N，我们得到了N-25的矩阵，一行代表每张图像的特征向量，每列代表同一个特征，而我们要求的P-x1-wi-就是在同一列中指定的几行中值为1的数量除以指定的几行的行数。其中同一列代表了同一特征（x1），而制定的几行代表了是同一个分类（wi）。" class="headerlink" title="1.P(X/wi)的计算：由于X代表的特征向量，我们暂且将每个特征都假定为独立变量，也就是P(X/wi)=P(x1/wi)* P(x2/wi)* P(x3/wi)*…………，现在我们的问题在于如何求解P(x1/wi)、P(x2/wi)等。在之前对训练样本做了特征提取之后，假定我们的样本数目为N，我们得到了N*25的矩阵，一行代表每张图像的特征向量，每列代表同一个特征，而我们要求的P(x1/wi)就是在同一列中指定的几行中值为1的数量除以指定的几行的行数。其中同一列代表了同一特征（x1），而制定的几行代表了是同一个分类（wi）。"></a>1.P(X/wi)的计算：由于X代表的特征向量，我们暂且将每个特征都假定为独立变量，也就是<code>P(X/wi)=P(x1/wi)* P(x2/wi)* P(x3/wi)*…………</code>，现在我们的问题在于如何求解<code>P(x1/wi)</code>、<code>P(x2/wi)</code>等。在之前对训练样本做了特征提取之后，假定我们的样本数目为N，我们得到了N*25的矩阵，一行代表每张图像的特征向量，每列代表同一个特征，而我们要求的P(x1/wi)就是在同一列中指定的几行中值为1的数量除以指定的几行的行数。其中同一列代表了同一特征（x1），而制定的几行代表了是同一个分类（wi）。</h5><h5 id="2-P-wi-的计算：这个相当简单的，就是每类的数量除以总样本的数量。"><a href="#2-P-wi-的计算：这个相当简单的，就是每类的数量除以总样本的数量。" class="headerlink" title="2.P(wi)的计算：这个相当简单的，就是每类的数量除以总样本的数量。"></a>2.P(wi)的计算：这个相当简单的，就是每类的数量除以总样本的数量。</h5><h4 id="5-图形识别"><a href="#5-图形识别" class="headerlink" title="5.图形识别"></a>5.图形识别</h4><p>分别计算<code>P(wi/X)</code>概率，哪类概率大就是判定为分到哪类中。</p>
-<p>此处的关键点：<font color="#DC143C">首先将图像进行特征提取，当第j个特征值为1的时候的概率为<code>P(xj/wi)</code>，而当特征值为0的时候的概率为<code>1-P(xj/wi)</code>.(<code>P(xj/Wi)</code>已经在训练中计算出来)</font></p>
-<h3 id="四、界面展示"><a href="#四、界面展示" class="headerlink" title="四、界面展示"></a>四、界面展示</h3><p>识别界面</p>
-<p><img src="http://obkykcznj.bkt.clouddn.com/tu%27xiang.png" alt="识别界面"></p>
-<p>识别成功界面</p>
-<p><img src="http://obkykcznj.bkt.clouddn.com/2.png" alt="识别成功界面"></p>
-<h3 id="五、源代码下载"><a href="#五、源代码下载" class="headerlink" title="五、源代码下载"></a>五、源代码下载</h3><p><a href="https://github.com/paulpig/WriteHandRecognize" target="_blank" rel="external">手写识别数字源代码下载</a></p>
-<p><a href="http://pan.baidu.com/s/1kUMnk83" target="_blank" rel="external">数字样本数据下载</a></p>
-
+<h3 id="一、算法的思想"><a href="#一、算法的思想" class="headerlink" title="一、算法的思想"></a>一、算法的思想</h3><p>主要思想：周期图像的自相关函数，水印信息实际上是角度</p>
+<p>1.嵌入水印思想：将一个有周期性并且有角度的随机块嵌入到图像中。<br>举个例子：<br>现有28*7的随机矩阵，之后将此矩阵不断重复知道能够覆盖图像，之后按照一个角度（实际上就是我们的水印信息）将此随机矩阵旋转，最后嵌入到原图像中。<br>这时候，可能有人会问，这么简单粗暴的将水印嵌入图像中，不是将原来图像的信息给覆盖了吗？不要急，我们之后会提到如何解决此问题（主要引入一个JND概念）。</p>
+<p>2.提取水印的思想：将加水印图像的噪声提取出来，之后将“噪声”做自相关，最后通过hough直线检测就能将我们的角度提取出来。<br>注意点：<br>一开始读论文的时候，我一直不能理解为什么将嵌入水印的图像自相关之后就能得到结果，此时加水印的图像不是周期图像。<br>后来我才明白其实可以简单理解为加入的水印其实就是噪声，我们其实提取的是加水印图像的噪声。</p>
+<h3 id="二、算法的详细步骤"><a href="#二、算法的详细步骤" class="headerlink" title="二、算法的详细步骤"></a>二、算法的详细步骤</h3><p>1.嵌入水印（随机块旋转指定角度，嵌入图像）<br><img src="http://obkykcznj.bkt.clouddn.com/in_watermasking.png" alt="嵌入算法总览图"><br>1)    RGB图像转化为YCbCr图像，之后提取Y分量，之后都是对Y分量操作的。<br>2)    预处理，为了破坏原图像存在的周期性。<br>3)    提取图像的JND，JND可以简单理解为像素点能让人眼识别不出最大的阈值。<br>4)    将图像分成九块，八块嵌入水印信息，一块是参考块。<br>5)    随机产生26个随机{0,1}集合,之后进行汉明码编码产生32位水印信息。并且以四位计算出一个角度，一共有八个角度。<br>6)    随机产生28*7随机块，不断重复随机块，直到能覆盖图像块，之后按照步骤(5)产生的角度进行旋转。<br>7)    旋转之后的随机块，同时结合JND，嵌入到原图像块中。</p>
+<p>2.提取水印：<br><img src="http://obkykcznj.bkt.clouddn.com/extra.png" alt="提取水印总览图"><br>1)    原图像减去维纳滤波之后的图像，得到的就是我们嵌入的信息。<br>2)    将图像分成九块，分块操作。<br>3)    对图像每块进行自相关，然后进行高斯变换去噪。<br>4)    对步骤(3)得到的矩阵，提取峰值。<br>5)    通过hough直线检测，检测到直线的角度<br>6)    将步骤(5)得到的角度，转换为二进制信息，之后再通过汉明码检错得到水印信息。</p>
+<h3 id="三、算法的实现"><a href="#三、算法的实现" class="headerlink" title="三、算法的实现"></a>三、算法的实现</h3><p>嵌入水印过程<br>原图像：<br><img src="http://obkykcznj.bkt.clouddn.com/origin.png" alt="原图像"></p>
+<p>图像的JND：<br><img src="http://obkykcznj.bkt.clouddn.com/jnd.png" alt="JND图像"></p>
+<p>嵌入的随机矩阵：<br><img src="http://obkykcznj.bkt.clouddn.com/in.png" alt="随机矩阵"></p>
+<p>嵌入水印图像：<br><img src="http://obkykcznj.bkt.clouddn.com/result.png" alt="嵌入水印图像"></p>
+<p>打印之后，相机拍摄的图像：<br><img src="http://obkykcznj.bkt.clouddn.com/paishe.png" alt="拍摄图像"></p>
+<p>提取水印过程<br>自相关之后的矩阵，从图中看出极值点是在几条平行的直线上<br><img src="http://obkykcznj.bkt.clouddn.com/mesh.png" alt="mesh图像"></p>
+<p>提取极值点之后的图像，从图中能够看到直线<br><img src="http://obkykcznj.bkt.clouddn.com/point.png" alt="极值点"></p>
+<p>提取水印效果：<br><img src="http://obkykcznj.bkt.clouddn.com/getinfor.png" alt="水印效果"><br>提取出的32位中出现了两位的错误，也就是检测九块中出错了一块。</p>
+<h3 id="四、参考文献"><a href="#四、参考文献" class="headerlink" title="四、参考文献"></a>四、参考文献</h3><p>Toward an interactive poster using digital watermarking and a mobile phone camera</p>
+<h3 id="五、代码下载"><a href="#五、代码下载" class="headerlink" title="五、代码下载"></a>五、代码下载</h3>
       
     </div>
     <div class="article-info article-info-index">
       
-      <a href="/2016/11/02/基于贝叶斯变换的手写识别数字/" class="archive-article-date">
-  	<time datetime="2016-11-02T15:34:12.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-02</time>
+      <a href="/2017/01/18/抗打印的水印算法/" class="archive-article-date">
+  	<time datetime="2017-01-18T07:50:01.000Z" itemprop="datePublished"><i class="icon-clock"></i>2017-01-18</time>
 </a>
       
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MFC/">MFC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opencv/">opencv</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图像处理/">图像处理</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/matlab/">matlab</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图像处理/">图像处理</a></li></ul>
 	</div>
 
       
@@ -204,15 +199,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2016/11/07/python-svmlib-opencv实现图片验证码的自动识别/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          python+svmlib+opencv实现图片验证码的自动识别
-        
-      </div>
-    </a>
   
+    <a href="/2016/11/07/python-svmlib-opencv实现图片验证码的自动识别/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python+svmlib+opencv实现图片验证码的自动识别</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
@@ -244,7 +235,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="基于贝叶斯变换的手写识别数字" data-title="基于贝叶斯变换的手写识别数字（MFC+Opencv）" data-url="http://yoursite.com/2016/11/02/基于贝叶斯变换的手写识别数字/"></div>
+	<div class="ds-thread" data-thread-key="抗打印的水印算法" data-title="抗打印的水印算法" data-url="http://yoursite.com/2017/01/18/抗打印的水印算法/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
