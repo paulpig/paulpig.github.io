@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="近期项目和时序序列预测相关，记录前人的工作。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="时序序列预测分析">
+<meta property="og:url" content="https://wbc520wrz.cn/2019/07/22/时序序列预测分析/index.html">
+<meta property="og:site_name" content="PaulPig&#39;s Blog">
+<meta property="og:description" content="近期项目和时序序列预测相关，记录前人的工作。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-23T11:15:08.517Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="时序序列预测分析">
+<meta name="twitter:description" content="近期项目和时序序列预测相关，记录前人的工作。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wbc520wrz.cn/2019/07/22/时序序列预测分析/">
+
+
+
+
+
+  <title>时序序列预测分析 | PaulPig's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">PaulPig's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wbc520wrz.cn/2019/07/22/时序序列预测分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PaulPig">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/paulpig.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PaulPig's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">时序序列预测分析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-22T19:31:58+08:00">
+                2019-07-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2019-07-23T19:15:08+08:00">
+                2019-07-23
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="Words count in article">
+                  2,533
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="Reading time">
+                  10
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <div class="note default"><p>近期项目和时序序列预测相关，记录前人的工作。</p></div>
+<a id="more"></a>
+<hr>
+<h4 id="传统方法"><a href="#传统方法" class="headerlink" title="传统方法"></a>传统方法</h4><ul>
+<li>AR模型</li>
+<li>MA模型</li>
+<li>ARMA模型<br>-</li>
+</ul>
+<h4 id="机器学习方法"><a href="#机器学习方法" class="headerlink" title="机器学习方法"></a>机器学习方法</h4><h5 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h5><blockquote>
+<p>python库: sklearn.preprocessing</p>
+</blockquote>
+<h6 id="采样"><a href="#采样" class="headerlink" title="采样"></a>采样</h6><blockquote>
+<p>样本中每个类别的数据分布不均衡和样本权重不同</p>
+</blockquote>
+<h6 id="无量纲化"><a href="#无量纲化" class="headerlink" title="无量纲化"></a>无量纲化</h6><p>不同特征的数值大小(纲量)不同，例如10000和10, 采用无量钢化获取同一纲量的特征，从而让数据有可比性. 下面介绍四种Feature scale:</p>
+<ul>
+<li>Rescaling(min-max normalization):<br>$$x’ = \frac{x-min(x)}{max(x)-min(x)}$$</li>
+<li><p>Mean nomalization:<br>$$x’=\frac{x-mean(x)}{max(x)-min(x)}$$</p>
+</li>
+<li><p>Standardization (Z-score Normalization)<br>$$x’=\frac{x-mean(x)}{std(x)}$$</p>
+</li>
+<li><p>Scaling to unit length<br>$$x’=\frac{x}{||x||_2}$$</p>
+</li>
+</ul>
+<p>标准化和归一化的中文翻译有很大的迷惑性, Standardization是在机器学习算法中广泛被使用的归一化方法,通过每个特征单独计算各自的z-score来达到同一纲量的作用. Scaling to unit length是在机器学习领域计算距离时常用的预处理。</p>
+<h6 id="缺失值填充"><a href="#缺失值填充" class="headerlink" title="缺失值填充"></a>缺失值填充</h6><blockquote>
+<p>对样本中的NAN值进行处理</p>
+<ul>
+<li>消除NAN值</li>
+<li>根据附近的值计算平均值，中位值等</li>
+<li>视为特征的feature，但是得确认NAN是有意义的请款下.</li>
+</ul>
+</blockquote>
+<hr>
+<h5 id="特征构造"><a href="#特征构造" class="headerlink" title="特征构造"></a>特征构造</h5><h6 id="Categorical-Features"><a href="#Categorical-Features" class="headerlink" title="Categorical Features"></a>Categorical Features</h6><p>范畴特征是通用的特征,例如文本,字符等.</p>
+<ol>
+<li>特征二值化 <blockquote>
+<p>连续的特征转为为离散的特征.</p>
+</blockquote>
+</li>
+</ol>
+<p>设定阈值，大于阈值设置为1，小于阈值设置为0.</p>
+<ol start="2">
+<li>One-hot编码<blockquote>
+<p>多类别特征,例如对于某些汉字可表示为名词，动词和形容词，此时用one-hot形式的编码.</p>
+<span class="label danger">在线性算法中使用广泛</span>
+</blockquote>
+</li>
+</ol>
+<p>设置选取特征值对应的位置为1，其余位置为0.</p>
+<ol start="3">
+<li><p>Hash编码<br>避免one-hot编码引起的稀疏性问题. 对特征计算的hash值作为新的特征,再用one-hot编码等.</p>
+</li>
+<li><p>Count 编码<br>统计特征值在训练集中出现的次数.</p>
+<span class="label danger">在线性算法和非线性中使用广泛</span>
+<p>结合<strong>数据变换(log)</strong></p>
+</li>
+<li><p>多项式编码<br>考虑不同特征之间的关系(交互).例如XOR问题通过构建交互特征可用线性模型来解决.</p>
+</li>
+<li><p>扩充编码<br>数据中存在一些基础的特征，需要手工提取分类.例如在浏览器的’user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36’中可提取<code>&#39;Operation System: Windows NT 10.0&#39;,Browser: Chrome</code>等潜在信息.</p>
+</li>
+<li><p>合并特征<br>多个不同的特征映射到同一个相同特征. 例如机构有简称和全称，可将此转化为相同的特征.</p>
+</li>
+</ol>
+<h6 id="Numerical-Features"><a href="#Numerical-Features" class="headerlink" title="Numerical Features"></a>Numerical Features</h6><ol>
+<li><p>Rounding<br>通过四舍五入等方法将数字特征转化为范畴特征，之后用范畴特征的方法来处理.</p>
+</li>
+<li><p>Binning<br>将数字特征分区间，并设置区间id.</p>
+</li>
+<li><p>Scaling<br>将数字特征缩放到指定范围中,有<code>Standard(Z) Scaling, MinMax Scaling, Root Scaling, Log Scaling</code></p>
+</li>
+<li><p>Interactions<br>编码不同数字特征值之间的相互影响因素,可通过加减乘除来计算特征值之间的影响, 两个特征值之间的差值等.</p>
+</li>
+</ol>
+<h6 id="trick"><a href="#trick" class="headerlink" title="trick"></a>trick</h6><ol>
+<li>选取线性算法时，对特征进行非线性变换会提升效果, 非线性变换有<code>Polynomial Kernel, Leafcoding(random forest embedding), Genetic algorithms, Locally Linear Embedding, Sepctral Embedding, t-SNE)</code></li>
+<li>统计原始数据中潜在的信息. 例如NAN的数量，0的数量，负数的数量，最大值，最小值，Skewness(偏移度) </li>
+<li>时间信息处理: 直接将时间戳作为特征会导致无法获取时间本身存在的循环特征.<ul>
+<li>例如2019/7/23 23:55和2019/7/24 00:01实际相差只有6分钟,如果直接使用时间戳导致相差为1434分钟，不符合常规. 策略是将时间戳$t$表示为表示为$(x,y)$,其中$x=sin(),y=cos()$. 例如早上六点,表示为$(x=sin(2<em>np.pi</em>6/24),y=cos(2<em>np.pi</em>6/24))$., 形象解释就是将时间戳映射到圆上，从而具有循环的特性。<a href="http://blog.davidkaleko.com/feature-engineering-cyclical-features.html?source=post_page---------------------------" target="_blank" rel="noopener">参考文章</a>. </li>
+<li>除此之外，根据不同时间区间的目标分布不同，将其转化为Categorical Features. 例如不同季节的消费水平差异大，可将不同季节设置one-hot特征等. </li>
+<li>最后也可根据时间特征和目标的关系，对部分时间序列进行编码.</li>
+</ul>
+</li>
+<li><p>空间特征: 例如GPS位置,国家地名等.</p>
+<ul>
+<li>转化为categorical特征: <code>Kriging, K-means clustering, Raw latitude longitude(经纬度), 邮政编码</code></li>
+<li>寻找附近的hubs(中心), 小城镇可能会收到大城市文化的影响。</li>
+<li>排除异常行为, 例如同一个可能同时做多趟火车去不同城市。</li>
+</ul>
+</li>
+<li><p>探索额外特征: 根据目标和数据之间的关系来探索额外的特征. 工具<code>Console, Notebook, Pandas</code></p>
+</li>
+<li><p>变换数据: 样本原始分布无规律，对其进行数据变换之后，或许能呈现某种规律。module: <code>sklearn.preprocessing 中的PolynomialFeatures</code>. 常见的变换: log, 指数, Box-Cox</p>
+</li>
+</ol>
+<h6 id="NLP相关的特征工程"><a href="#NLP相关的特征工程" class="headerlink" title="NLP相关的特征工程"></a>NLP相关的特征工程</h6><ul>
+<li><p>数据清洗:</p>
+<ul>
+<li>Lowercasing</li>
+<li>Unidecode(例如葡萄牙语中的字符转化为英文)</li>
+<li>删除非字母数字([a-z][A-Z][0-9])</li>
+<li>修复: 修复编码问题和修剪</li>
+</ul>
+</li>
+<li><p>Tokenizing:</p>
+<ul>
+<li>对标点符号编码: ,.!等标点符号进行编码</li>
+<li>Tokenize</li>
+<li>N-Grams</li>
+<li>Skip-grams: 跳过一些连续的词进行gram</li>
+<li>Char-grams: 字符级别的gram</li>
+<li>Affixes: 前缀词和后缀词</li>
+</ul>
+</li>
+<li><p>Removing:</p>
+<ul>
+<li>Stopwords: 删除在停用词表中的词</li>
+<li>Rare words: 删除稀有词</li>
+<li>Common words: 删除一些通用词，例如’的’</li>
+</ul>
+</li>
+<li><p>Roots:</p>
+<ul>
+<li>矫正拼写</li>
+<li>裁剪: 只选取开头的字符</li>
+<li>音译(transliteration)</li>
+<li>词干(stemming): 例如’cars’转化为’car’</li>
+<li>词形变化(inflection/lemmatisation): 考虑时态和人称,和词干相反。</li>
+<li>stemming和lemmatisation区别: stemming是根据字典来查询到对应的词干，不考虑上下文信息,lemmatisation则考虑文本的上下文信息，能够识别同一个词的不同词性.</li>
+</ul>
+</li>
+<li><p>丰富语义特征:</p>
+<ul>
+<li>文档特征: 空格数, tab数，行数，字符数，token数, <strong>文档长度</strong></li>
+<li>插入实体: 插入实体将内容补充完整, “我去了爱情海”–&gt;“我去了爱情海(商城)”</li>
+<li>句法特征: POS(Part of speech):词性, 考虑词和词之间的关系</li>
+<li>文档的阅读水平和类型等: 四级，六级水平</li>
+</ul>
+</li>
+<li><strong>相似度</strong>(important):<ul>
+<li><strong>统计两个词同时出现在文章中的频率</strong></li>
+<li>两个文档的距离(Normalized compression distance): 衡量文档的相似度</li>
+<li>词之间的距离: <code>Levenshtein/Hamming/Jaccard Distance</code>，编辑距离</li>
+<li>词向量之间的距离: word2vec/Glove</li>
+</ul>
+</li>
+<li><p>词的权重频率</p>
+<ul>
+<li>TF-IDF </li>
+<li><strong>词出现在文档(title,description)中的频率</strong></li>
+</ul>
+</li>
+<li><p>降维: PCA, SVD, LDA(TF-IDF followed by SVD), LSA(创建主题向量)<a href="https://github.com/chrisjmccormick/LSA_Classification/blob/master/runClassification_LSA.py" target="_blank" rel="noopener">LSA代码</a></p>
+</li>
+<li><p>额外的模型:</p>
+<ul>
+<li>情感分析: 创建表示情感的向量</li>
+<li>主题模型: 在主题模型的数据库中学习到主题应用到当前数据中.</li>
+</ul>
+</li>
+<li><p>案例:</p>
+<ul>
+<li><a href="http://blog.kaggle.com/2016/08/24/avito-duplicate-ads-detection-winners-interview-1st-place-team-devil-team-stanislav-dmitrii/" target="_blank" rel="noopener">判断两个广告是否重复</a>: 1).广告自身的特征,例如产品名称,价格,LSA,LDANnormalization title length等. 2).文档之间的不同,例如相似度，共现词,文档长度差等</li>
+<li>[]</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h5><blockquote>
+<p>python模块: feature_selection</p>
+</blockquote>
+<p>[2]从两个方面来选择特征:</p>
+<ul>
+<li>特征是否发散: 特征发散说明方差大，特征值分布分散，利于对样本的区分。反之，不利于对样本的区分。</li>
+<li>特征和目标的相关性: 和目标相关度高的特征优先被选择。 </li>
+</ul>
+<p>[2]涉及三种特征选择方法:</p>
+<ul>
+<li>Filter: 根据特征和目标之间的相关性来选择特征.</li>
+<li>Wrapper: 根据评价指标(例如F1，AUC等)来选择特征.</li>
+<li>Embedded: 模型根据其自身学习到的特征权重来选择特征,例如决策树的信息增益.</li>
+</ul>
+<h6 id="Filter"><a href="#Filter" class="headerlink" title="Filter"></a>Filter</h6><ul>
+<li>方差选择法: 计算特征的方差，选择方差大于设定的阈值对应的特征。<code>VarianceThreshold</code> </li>
+<li>相关系数法: 计算特征和目标函数的相关系数来选取特征. <code>SelectKBest</code></li>
+<li>卡方检验: <strong>检验定性自变量和定性因变量的相关性.</strong> <code>SelectKBest</code></li>
+<li>互信息法: 评价自变量和因变量的相关度。<code>SelectKBest</code></li>
+</ul>
+<h6 id="Wrapper"><a href="#Wrapper" class="headerlink" title="Wrapper"></a>Wrapper</h6><ul>
+<li>递归特征消除法: 模型通过多次迭代来选择特征，其中每次迭代会消除部分特征. <code>RPE</code><br>-</li>
+</ul>
+<h6 id="Embedded"><a href="#Embedded" class="headerlink" title="Embedded"></a>Embedded</h6><ul>
+<li>正则化: 通过L1或者L2正则化,让模型自己选择特征. <code>SelectFromModel</code></li>
+<li>决策树: 决策树模型中的信息熵来对特征进行选择, 例如GBDT,XGBoost等模型.</li>
+<li>深度学习<br>-<br>-</li>
+</ul>
+<hr>
+<h5 id="降维"><a href="#降维" class="headerlink" title="降维"></a>降维</h5><ul>
+<li>PCA</li>
+<li>LDA<br>-</li>
+</ul>
+<hr>
+<h5 id="模型和方法"><a href="#模型和方法" class="headerlink" title="模型和方法"></a>模型和方法</h5><ul>
+<li>Boosting系列: <strong>XGBoost</strong>(最有效), LightGBM, GBDT, Adaboost</li>
+<li>Random Forest: </li>
+<li>Extra Randomized Trees:</li>
+<li>SVM:</li>
+<li>Linear Regression:</li>
+<li>Logistic Regression: <code>LibLinear in sklearn</code></li>
+<li>Neural Networks:</li>
+</ul>
+<h5 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h5><h5 id="模型融合"><a href="#模型融合" class="headerlink" title="模型融合"></a>模型融合</h5><ol>
+<li>Voting</li>
+<li>Averaging</li>
+<li>Bagging: 有放回去的取出样本来训练多个基础模型，之后将其进行集成(voting/averaging),代表为Random Forest</li>
+<li>Boosting: 是一种迭代的方式来训练，每次对所有样本进行训练，通过对分类错误的样本更大的权重，从而使模型更加关注于之前分类错误的样本, 代表为AdaBoost.</li>
+<li>Stacking: 首先k-fold方法将<strong>训练集</strong>分割成K个数据集${T_{all}/T_1,\cdots ,T_{all}/T_i,\cdots,T_{all}/T_k}$,其中$T_i={X_i,Y_i}$,用K个数据集分别训练K个基础模型，之后层将前一层的输出拼接起来${\hat{Y}_1,\cdots,\hat{Y}_i,\cdots,\hat{Y}_k}$作为当前层模型$F_i$的输入,当前层模型的输出为${Y_1,\cdots,Y_i,\cdots,Y_k}$进行训练，不断迭代。在测试集上的预测值为$\hat{Y}_p=F_i(Mean(\sum_kF_{i-1}(X_p) ))$, 其中$X_p$为测试集的feature,将前一层对$X_p$的预测的平均值作为当前层的输入来预测得到最后的结果. 代码见参考文献[6],为什么效果会好？？？</li>
+</ol>
+<hr>
+<h4 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h4><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/54413813" target="_blank" rel="noopener">关于时序序列预测的一些总结</a></li>
+<li><a href="https://www.cnblogs.com/jasonfreak/p/5448385.html" target="_blank" rel="noopener">使用sklearn做单机特征工程</a></li>
+<li><a href="https://www.slideshare.net/HJvanVeen/feature-engineering-72376750" target="_blank" rel="noopener">feature engineering</a></li>
+<li><a href="https://www.kaggle.com/c/quora-question-pairs" target="_blank" rel="noopener">quora-question-pairs</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/25836678" target="_blank" rel="noopener">模型融合方法概述</a></li>
+<li><a href="https://dnc1994.com/2016/04/rank-10-percent-in-first-kaggle-competition/" target="_blank" rel="noopener">如何在Kaggle首战中进入前10%</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/22/python3模块之OS与SYS/" rel="next" title="python3常用模块介绍">
+                <i class="fa fa-chevron-left"></i> python3常用模块介绍
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/23/git常用命令/" rel="prev" title="git常用命令">
+                git常用命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/paulpig.png" alt="PaulPig">
+            
+              <p class="site-author-name" itemprop="name">PaulPig</p>
+              <p class="site-description motion-element" itemprop="description">Bingchao Wu, a PhD student in NLP, Institute of Software, Chinese Academy of Sciences</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/paulpig" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#传统方法"><span class="nav-number">1.</span> <span class="nav-text">传统方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#机器学习方法"><span class="nav-number">2.</span> <span class="nav-text">机器学习方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#数据预处理"><span class="nav-number">2.1.</span> <span class="nav-text">数据预处理</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#采样"><span class="nav-number">2.1.1.</span> <span class="nav-text">采样</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#无量纲化"><span class="nav-number">2.1.2.</span> <span class="nav-text">无量纲化</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#缺失值填充"><span class="nav-number">2.1.3.</span> <span class="nav-text">缺失值填充</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#特征构造"><span class="nav-number">2.2.</span> <span class="nav-text">特征构造</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Categorical-Features"><span class="nav-number">2.2.1.</span> <span class="nav-text">Categorical Features</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Numerical-Features"><span class="nav-number">2.2.2.</span> <span class="nav-text">Numerical Features</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#trick"><span class="nav-number">2.2.3.</span> <span class="nav-text">trick</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#NLP相关的特征工程"><span class="nav-number">2.2.4.</span> <span class="nav-text">NLP相关的特征工程</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#特征选择"><span class="nav-number">2.3.</span> <span class="nav-text">特征选择</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Filter"><span class="nav-number">2.3.1.</span> <span class="nav-text">Filter</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Wrapper"><span class="nav-number">2.3.2.</span> <span class="nav-text">Wrapper</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Embedded"><span class="nav-number">2.3.3.</span> <span class="nav-text">Embedded</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#降维"><span class="nav-number">2.4.</span> <span class="nav-text">降维</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#模型和方法"><span class="nav-number">2.5.</span> <span class="nav-text">模型和方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#调试"><span class="nav-number">2.6.</span> <span class="nav-text">调试</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#模型融合"><span class="nav-number">2.7.</span> <span class="nav-text">模型融合</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文献"><span class="nav-number">3.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PaulPig</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="Site words total count">16.3k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

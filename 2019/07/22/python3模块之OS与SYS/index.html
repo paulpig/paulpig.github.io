@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="coding,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="记录os模块,sys模块,pandas模块的常用方法.">
+<meta name="keywords" content="coding">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python3常用模块介绍">
+<meta property="og:url" content="https://wbc520wrz.cn/2019/07/22/python3模块之OS与SYS/index.html">
+<meta property="og:site_name" content="PaulPig&#39;s Blog">
+<meta property="og:description" content="记录os模块,sys模块,pandas模块的常用方法.">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-08-09T13:03:20.879Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python3常用模块介绍">
+<meta name="twitter:description" content="记录os模块,sys模块,pandas模块的常用方法.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wbc520wrz.cn/2019/07/22/python3模块之OS与SYS/">
+
+
+
+
+
+  <title>python3常用模块介绍 | PaulPig's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">PaulPig's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wbc520wrz.cn/2019/07/22/python3模块之OS与SYS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PaulPig">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/paulpig.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PaulPig's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python3常用模块介绍</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-22T10:31:34+08:00">
+                2019-07-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2019-08-09T21:03:20+08:00">
+                2019-08-09
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python3/" itemprop="url" rel="index">
+                    <span itemprop="name">python3</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="Words count in article">
+                  1,817
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="Reading time">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <div class="note default"><p>记录os模块,sys模块,pandas模块的常用方法.</p></div>
+<a id="more"></a>
+<hr>
+<h4 id="python基础知识"><a href="#python基础知识" class="headerlink" title="python基础知识"></a>python基础知识</h4><ul>
+<li>list[:,1]和list[:,[1]]区别在于前者将<code>1</code>所在维度删除,而[1]则会保留当前维度. 例如$a \in  \mathbb{R}^2$,a[:,1]返回的一维数组，二维数组被返回通过a[:,[1]].</li>
+<li>map(fun,iter): 对迭代器(list,tuple etc.)中每个元素调用fun函数，返回结果构成的list.</li>
+</ul>
+<h4 id="pandas-模块"><a href="#pandas-模块" class="headerlink" title="pandas 模块"></a>pandas 模块</h4><h5 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h5><ul>
+<li>Series: index为行索引,可用list初始化</li>
+<li>DataFrame: <ul>
+<li>index为行名称,columns为列名称</li>
+<li>可用dict初始化,key为列索引, value为具体的值</li>
+<li>df.dtypes: 显示每列数据的类型</li>
+<li>支持bool type, 例如df.loc[:,df[‘a’]&gt;0], 筛选出’a’行元素大于0的列</li>
+<li>行名字又叫做label</li>
+</ul>
+</li>
+</ul>
+<h5 id="显示数据"><a href="#显示数据" class="headerlink" title="显示数据"></a>显示数据</h5><ul>
+<li>df.head(number): 前number行数据</li>
+<li>df.tail(number): 最后number行数据 </li>
+<li>df.index:　展示行索引</li>
+<li>df.columns: 展示列索引</li>
+<li>df.to_numpy(): 将DataFrame转化为numpy类型. 如果DataFrame中包含单一类型, 例如float, 转换速度很快. 如果DataFrame包含多个multiple types, 转换过程比较耗时，并且转化之后数据类型为object, 且不包含index和columns.</li>
+<li>df.describe(): 展示数据的一些统计变量,例如数量,均值和方差等.</li>
+<li>df.T: 转置操作</li>
+<li>df.sort_values(by=’column1’): 按照列”column1”排序,默认升序.</li>
+</ul>
+<h5 id="选择数据"><a href="#选择数据" class="headerlink" title="选择数据"></a>选择数据</h5><ul>
+<li>Series类型的[]得到的是常数，DataFrame类型的[]得到的是一列.</li>
+<li>df.loc[row_name,column_name]: 根据名字(<strong>不支持索引</strong>)来选择行和列，其中row_name是单独的label或者list类型,<strong>单独的label得到的是Series类型,list得到的是DataFrame类型</strong>. 例如df.loc[‘A’],df.loc[[‘s’,’b’]],df.loc[[‘a’],[‘d’,’c’]], <strong>[符号而非(符号</strong></li>
+<li>df.iloc[row_index, column_index]: 根据index索引来选择行和列</li>
+<li><p>df[colname]: []只能用于选择colunms,<strong>无法选择行</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% label danger @不能将df[]内容赋值到df.loc中, df.loc[&apos;A&apos;] = df[&apos;A&apos;]是错误的, 原因??,正确是通过to_numpy()转化. %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>df.column_name: 通过属性的方式来获取数据,其中column_name为列名字, <strong>可通过df.column_name的方式修改已经存在列的内容，但是无法添加不存在的列</strong></p>
+</li>
+<li>df[start_index:end_index:step]: 同python语法一样支持slice</li>
+<li>通过回调函数(callable)来选择内容, df[callable,:]: 其中callable必须是带一个参数(一般是DataFrame或者Series)的函数，例如: df.loc[lambda df: df.A &gt;0, :]</li>
+<li>df.at[]和df.iat: 在查找scalar时速度快</li>
+<li>df.isin([‘a’,’b’]): 选择符合条件的列, 例如df[df[‘A’].isin([‘a’,’b’])]表示为选择’A’列中值为’a’或者’b’的行.</li>
+<li>df.get(): 和[]方法最大的区别在于选取无效column_name时，不会报错。</li>
+<li>df.values: 和to_numpy()方法作用相同</li>
+</ul>
+<h5 id="缺失数据"><a href="#缺失数据" class="headerlink" title="缺失数据"></a>缺失数据</h5><blockquote>
+<p>np.nan 表示确实的数据。</p>
+</blockquote>
+<ul>
+<li>df.dropna(how=’any’): 删除所有缺失的数据.</li>
+<li>df.fillna(value): 用value填充NAN</li>
+<li>df.isna(df): 判断DataFrame中的元素是否为NAN,返回boolean类型<br>-<br>-</li>
+</ul>
+<h5 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h5><blockquote>
+<p>统计操作是将NAN值排除在外.</p>
+</blockquote>
+<ul>
+<li>df.mean(axis=0): <code>axis=0</code> 表示行之间, <code>axis=1</code>表示列之间。</li>
+<li>df.sub(Series,axis=0): 减法操作</li>
+<li>df.apply(lambda x: x): 其中x默认是列(Series)</li>
+<li>df.value_counts(): 统计不同元素出现的次数.</li>
+<li>df.str.lower(): 元素转换为小写.</li>
+<li>df.query(‘a’&gt;’b’): 等价于<code>df[data.a&gt;data.b]</code></li>
+<li>df.sort_values([‘a’]): 按照’a’列中的数据来排序.</li>
+<li>df.agg(func,axis=0): 集成在某个维度上的一个或者多个操作,一般是在groupby之后使用, 例如df.groupby(df[‘a’]).agg([‘max’,’min’])先将数据按照列’a’进行groupby,之后对每个group中求最大值和最小值.</li>
+<li>df.add(): 两个DataFrame相加</li>
+<li>df.drop(): 两个DataFrame相减,(一般用于将一整行或者一整列删除)</li>
+<li>df.sub(): element-wise相减</li>
+</ul>
+<h5 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h5><ul>
+<li>pd.concat([data1,data2], axis=0):  其中data1和data2是DataFrame或者Series类型.</li>
+<li>pd.merge(left,right,on=’name’): 根据name将left和right内容合并</li>
+<li>pd.append()</li>
+<li>DataFrame添加一行或者一列: df.loc[‘xxxx’]= 添加一行, df[‘xxx’] = 添加一列</li>
+</ul>
+<h5 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h5><blockquote>
+<p>步骤:1).splitting 2).applying 3).combining</p>
+</blockquote>
+<ul>
+<li>df.groupby(‘column_name’).sum(): 按照column_name将’A’列中相同的值组合一起，之后对每个组中的值进行相加操作, 与mysql的groupby类似.</li>
+</ul>
+<h5 id="读取和存储数据"><a href="#读取和存储数据" class="headerlink" title="读取和存储数据"></a>读取和存储数据</h5><ul>
+<li>df.csv(‘xxx.csv’): 写入xxx.csv </li>
+<li>df.read_csv(‘xxx.csv’): 读取xxx.csv文件<ul>
+<li>index_col:　0表示将第一列设置为index(行索引)</li>
+</ul>
+</li>
+<li>df.to_hdf(): 写入HDF5文件</li>
+<li>df.read_hdf()</li>
+<li>df.to_excel()</li>
+<li>df.read_excel()</li>
+</ul>
+<h5 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h5><ul>
+<li>df.set_index([a,b,c]): 将某列设置为index(行索引)</li>
+<li>df.stack(): 从”表格结构”(行列都有索引)变成”树状结构”(行的多重索引)</li>
+<li>df.unstack(level=): 与stack()相反, 其中level表示需要转化为column的索引，例如0表示第一层的index转化为column </li>
+</ul>
+<h4 id="os-模块"><a href="#os-模块" class="headerlink" title="os 模块"></a>os 模块</h4><blockquote>
+<p>This module provides a portable way of using operating system dependent functionality.</p>
+</blockquote>
+<blockquote>
+<p>常用功能: 文件操作相关</p>
+</blockquote>
+<p><a href="https://docs.python.org/2/library/os.path.html" target="_blank" rel="noopener">官方文档</a></p>
+<ul>
+<li>os.getcwd(): 获取当前目录</li>
+<li>os.walk(): 遍历path下的所有文件和目录, 返回三个元素的tuple (dirpath,dirnames,filenames)</li>
+<li>os.path.join(path1,[a,b,c]): path1和a,b,c分别联合成完整的路径</li>
+<li>os.path.basename(): 只返回文件名,不返回目录路径</li>
+<li>os.path.dirname(): 只返回目录路径，不返回文件名</li>
+<li>os.path.split(): 返回(dirname,basename)</li>
+<li>os.path.exits(path): 文件是否存在</li>
+<li>os.path.isdir(): 是否是目录</li>
+<li>os.path.isfile: 是否是文件</li>
+<li>os.mkdir(): 生成单个目录</li>
+<li>os.makedirs(‘dirname/dirname3’): 生成多级目录, 等价于”mkdir -p”</li>
+<li>os.remove(): 删除文件</li>
+<li>os.path.getsize(): 文件大小</li>
+<li>os.path.isabs: 是否是绝对路径<h4 id="sys-模块"><a href="#sys-模块" class="headerlink" title="sys 模块"></a>sys 模块</h4><blockquote>
+<p>This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter.</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>常用功能: 运行python环境相关　</p>
+</blockquote>
+<p><a href="https://docs.python.org/2/library/sys.html" target="_blank" rel="noopener">官方网址</a></p>
+<ul>
+<li>sys.argv: 命令行列表参数,其中第一个元素是程序本身的路径</li>
+<li>sys.path: python3中module的搜索路径, 引用自定义模块需要append自定义module路径 </li>
+</ul>
+<h4 id="argparse模块"><a href="#argparse模块" class="headerlink" title="argparse模块"></a>argparse模块</h4><ul>
+<li>parser = argparse.ArgumentParser(): 新建参数解析器</li>
+<li>parser.add_argument()； 对参数解析器添加参数<ul>
+<li>xxx: 必填参数，无需指定xxx, 例如python3 argument</li>
+<li>–xxx: 选填参数, 在输入参数之前需指定–xxx, 例如python3 –xxx agument</li>
+<li>-xxx: 与–xxx相似</li>
+<li>action: 遇到指定参数之后执行的动作,例如<code>add_argument(&#39;--foo&#39;,action=&#39;store_true&#39;)</code>表示遇见<code>--foo</code>参数是设置foo参数的值为True.</li>
+<li>default: 默认赋给参数的值</li>
+<li>type: 指定参数类型</li>
+<li>help: 简单描述参数的作用</li>
+<li>dest: 如果存在表示指定Namespace(parse_args()的返回对象)中的属性名字，如果不存在dest参数，那么默认xxx作为属性名字.</li>
+</ul>
+</li>
+<li>args = parser.parse_args(): 解析解析器中的参数内容到Namespace类</li>
+<li>args.xxx: 通过访问Namespace类中属性来获取参数的值</li>
+</ul>
+<h4 id="logging模块"><a href="#logging模块" class="headerlink" title="logging模块"></a>logging模块</h4><ul>
+<li>当logging模块和tensorflow模块同事出现时，loggging模块无法输出到文件中. <a href="https://stackoverflow.com/questions/44853059/tensorflow-logging-messages-do-not-appear" target="_blank" rel="noopener">tensorflow-logging-do-not-appear-meanly</a></li>
+</ul>
+<h4 id="pdg模块"><a href="#pdg模块" class="headerlink" title="pdg模块"></a>pdg模块</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import pdb</span><br><span class="line">pdb.set_trace() ＃设置断点</span><br></pre></td></tr></table></figure>
+<p>程序会执行到<code>pdb.set_trace()</code>,之后跳出交互界面，输入命令就能对其进行调试, 命令详细信息如下:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">b</td>
+<td style="text-align:center">设置断点</td>
+</tr>
+<tr>
+<td style="text-align:center">c</td>
+<td style="text-align:center">程序继续执行</td>
+</tr>
+<tr>
+<td style="text-align:center">l</td>
+<td style="text-align:center">查看当前代码片段</td>
+</tr>
+<tr>
+<td style="text-align:center">s</td>
+<td style="text-align:center">进入函数</td>
+</tr>
+<tr>
+<td style="text-align:center">r</td>
+<td style="text-align:center">执行代码直到返回结果</td>
+</tr>
+<tr>
+<td style="text-align:center">q</td>
+<td style="text-align:center">终止并且退出</td>
+</tr>
+<tr>
+<td style="text-align:center">n</td>
+<td style="text-align:center">执行下一行</td>
+</tr>
+<tr>
+<td style="text-align:center">pp</td>
+<td style="text-align:center">打印变量的值</td>
+</tr>
+<tr>
+<td style="text-align:center">help</td>
+<td style="text-align:center">帮助</td>
+</tr>
+<tr>
+<td style="text-align:center">tbreak</td>
+<td style="text-align:center">临时断点</td>
+</tr>
+<tr>
+<td style="text-align:center">cl</td>
+<td style="text-align:center">清除断点</td>
+</tr>
+<tr>
+<td style="text-align:center">unt</td>
+<td style="text-align:center">运行到指定行</td>
+</tr>
+<tr>
+<td style="text-align:center">j</td>
+<td style="text-align:center">跳转到指定行,被跳过代码不执行</td>
+</tr>
+<tr>
+<td style="text-align:center">a</td>
+<td style="text-align:center">查看函数参数</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/coding/" rel="tag"># coding</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/20/信息抽取牛人及其实验室-md/" rel="next" title="研究信息抽取的实验室和科研工作者">
+                <i class="fa fa-chevron-left"></i> 研究信息抽取的实验室和科研工作者
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/22/时序序列预测分析/" rel="prev" title="时序序列预测分析">
+                时序序列预测分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/paulpig.png" alt="PaulPig">
+            
+              <p class="site-author-name" itemprop="name">PaulPig</p>
+              <p class="site-description motion-element" itemprop="description">Bingchao Wu, a PhD student in NLP, Institute of Software, Chinese Academy of Sciences</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/paulpig" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#python基础知识"><span class="nav-number">1.</span> <span class="nav-text">python基础知识</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pandas-模块"><span class="nav-number">2.</span> <span class="nav-text">pandas 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#创建对象"><span class="nav-number">2.1.</span> <span class="nav-text">创建对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#显示数据"><span class="nav-number">2.2.</span> <span class="nav-text">显示数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#选择数据"><span class="nav-number">2.3.</span> <span class="nav-text">选择数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缺失数据"><span class="nav-number">2.4.</span> <span class="nav-text">缺失数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基础操作"><span class="nav-number">2.5.</span> <span class="nav-text">基础操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#合并"><span class="nav-number">2.6.</span> <span class="nav-text">合并</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#组合"><span class="nav-number">2.7.</span> <span class="nav-text">组合</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#读取和存储数据"><span class="nav-number">2.8.</span> <span class="nav-text">读取和存储数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#方法"><span class="nav-number">2.9.</span> <span class="nav-text">方法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#os-模块"><span class="nav-number">3.</span> <span class="nav-text">os 模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sys-模块"><span class="nav-number">4.</span> <span class="nav-text">sys 模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#argparse模块"><span class="nav-number">5.</span> <span class="nav-text">argparse模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#logging模块"><span class="nav-number">6.</span> <span class="nav-text">logging模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pdg模块"><span class="nav-number">7.</span> <span class="nav-text">pdg模块</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PaulPig</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="Site words total count">16.3k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
