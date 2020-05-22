@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="PaulPig&#39;s Blog">
 <meta property="og:description" content="记录一下论文中每个章节的写作逻辑和套路.">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-09T12:43:15.974Z">
+<meta property="og:updated_time" content="2019-08-10T13:19:50.741Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文写作逻辑">
 <meta name="twitter:description" content="记录一下论文中每个章节的写作逻辑和套路.">
@@ -335,8 +335,8 @@
                 <i class="fa fa-calendar-check-o"></i>
               </span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2019-08-09T20:43:15+08:00">
-                2019-08-09
+              <time title="Post modified" itemprop="dateModified" datetime="2019-08-10T21:19:50+08:00">
+                2019-08-10
               </time>
             
           </span>
@@ -361,7 +361,7 @@
                 </span>
                 
                 <span title="Words count in article">
-                  550
+                  1,752
                 </span>
               
 
@@ -375,7 +375,7 @@
                 </span>
                 
                 <span title="Reading time">
-                  2
+                  6
                 </span>
               
             </div>
@@ -399,15 +399,44 @@
         <div class="note default"><p>记录一下论文中每个章节的写作逻辑和套路.</p></div>
 <a id="more"></a>
 <hr>
-<h4 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h4><ul>
+<h4 id="通用部分"><a href="#通用部分" class="headerlink" title="通用部分"></a>通用部分</h4><ul>
+<li>总(笼统) –&gt; 细化, 例如先提出一个大问题(效果不好)，之后细化到具体问题(哪里的问题). 先提出总的方法(方法的基本思想)，之后细化方法(具体到网络结构模型)</li>
+<li>提出xxxx模型 to xxx ,then xxx, 为什么要这么做(原因/目的), 这么做和其余方法比较有什么优势.</li>
+<li>语句逻辑: 是什么，提出什么，目的是什么，挑战是什么，意义是什么，重要性是什么，作用是什么，怎么做，为什么这么做， 有什么效果，为什么有效果，应用是什么。</li>
+<li>段落逻辑: <ul>
+<li>做了什么内容</li>
+<li>内容是什么</li>
+<li>内容的优势，为什么会有优势</li>
+<li>作用是什么(to)</li>
+<li>应用是什么，能够用来干什么</li>
+<li>是通过xxx方式来获取的（具体的网络结构）<h4 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h4></li>
+</ul>
+</li>
 <li>介绍任务和意义(是什么，目的是什么，应用是什么)</li>
 <li>介绍任务已有的方法</li>
-<li>已有方法面临的挑战</li>
+<li>已有方法面临的挑战: 然而现实情况是xxx，基于xxxx假设是weekly, 我们相信xxx不能xxx和xxx<ul>
+<li>阐述一个<strong>笼统的问题</strong>,例如导致了性能效果不好，不一致问题等</li>
+<li>细化问题本身，并说明原因</li>
+<li>应用它或导致xxx问题</li>
+<li>实例化，特别是xxx任务，因为xxx原因</li>
+</ul>
+</li>
 <li>针对挑战，提出创新思路, 阐述基本思想和网络结构,每个步骤的基本思想(例如换模型的时候，先阐述待替换模型的优势，但是很少利用在xx领域，)</li>
 <li>实验结果验证方法的有效性</li>
 <li>贡献点: 网络模型，新颖的方法，实验结果, 模型的优点(例如通用性广,能应用到其余任务)</li>
 </ul>
-<h5 id="好词好句"><a href="#好词好句" class="headerlink" title="好词好句"></a>好词好句</h5><h4 id="实验部分"><a href="#实验部分" class="headerlink" title="实验部分"></a>实验部分</h4><h5 id="实验数据"><a href="#实验数据" class="headerlink" title="实验数据"></a>实验数据</h5><p>阐述数据本身的统计值，例如句子的数量，标签类型个数, domain(领域), 特征(数量级,多样性), 来源,<br>训练集，验证集和测试集的划分</p>
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><ul>
+<li>先介绍前人的方法，之后受到他们的启发之后提出自己的方法, 其中提出的方法的步骤可以是: 先通过一些简单语句将核心概念提出来，之后再强调概念的重要性，然后详细阐述概念的具体内容(如果有什么假设，写在具体阐述之前)</li>
+<li>通过类比的方法来引出自己的方法，例如,xxx是怎么做的，similary, 我们通过xxx做xxx</li>
+<li>inspired by the success of xxx, 我们采用xxx去干吗</li>
+<li>先思想，后步骤(First ,then, )<ul>
+<li>先提出xxx内容，其基本思想是啥</li>
+<li>对引入的内容详细说明，例如重要性，假设，意义，挑战等等</li>
+<li>再次细化，内容有那几部分构成，如何将这几部分进行融合</li>
+</ul>
+</li>
+</ul>
+<h4 id="实验部分"><a href="#实验部分" class="headerlink" title="实验部分"></a>实验部分</h4><h5 id="实验数据"><a href="#实验数据" class="headerlink" title="实验数据"></a>实验数据</h5><p>阐述数据本身的统计值，例如句子的数量，标签类型个数, domain(领域), 特征(数量级,多样性), 来源,<br>训练集，验证集和测试集的划分</p>
 <h5 id="实验设置"><a href="#实验设置" class="headerlink" title="实验设置"></a>实验设置</h5><ul>
 <li>word embedding: 大小，来源(例如 Glove), words out of the vocabulary(例如:未登录词的初始化), 微调(例如根据频率大小删除一些词)</li>
 <li>初始化的方法(例如Xavier等), batch-size, epoch, learning rate strategy, dropout 等</li>
@@ -430,6 +459,27 @@
 </li>
 <li><p>error analysis:</p>
 </li>
+</ul>
+<h5 id="逻辑方法"><a href="#逻辑方法" class="headerlink" title="逻辑方法"></a>逻辑方法</h5><ul>
+<li>目标(基本思想)是什么，recent advances of xxx, 近期的xxx方法能够xxx. (思想到做法)</li>
+<li>直观上的思想是什么，Inspired by xxx, 具体的做法是什么.</li>
+<li>大到小的思想, 宏观的概念，之后详细解释概念的来源/定义。</li>
+<li>先阐述具体的步骤，之后总结步骤的思想.</li>
+<li>假设(assume)xxx, 为了(to xxx), 我们应该xxxx.</li>
+<li>先阐述基本思想，之后阐述作用/好处/意义最后阐述方法.</li>
+<li>先阐述对象本身的特点(例如基本思想，好处，方法等)，之后将对象嵌入到更大的对象(例如步骤)中进行阐述.</li>
+<li>首先引出要就研究的对象(例如从通用方法引出)，之后阐述对象的本身的特点(例如要求)，接着阐述方法</li>
+<li>在文章开始(introduce)的时候要简单阐述(一般不涉及具体的方法,by xxx尽量不要出现), 之后method章节的一开始要尽可能详细阐述方法(by xxx, with xxx over xxx,to xxxx,from xxx)，但是不涉及具体的公式，最后形式化阐述时候，尽可能用公式来阐述。</li>
+<li>首先阐述最常用的方法或者前人的方法，之后阐述其缺点，如果没有缺点的话，可以用In pratice来进行过度到自己的方法，最后再公式化阐述自己的方法.</li>
+<li>对于某些特殊的超参数，可以通过当该参数接近于0是什么情况，当该参数接近于无穷时是什么情况，来增加篇幅</li>
+<li>存在方法的做法/基本思想 + 存在的问题 + 提出解决措施.</li>
+<li>目标是什么 + 现在的方法不能到达目标/存在一些问题/为什么要提出我们的方法  + 引出我们的方法 + 最后阐述这么做的好处/作用或者原因(一般用于扩充文章篇幅).</li>
+<li>一般是先描述主流程步骤，如果要强调步骤中的一些关键点，一般是在最后用For xxx, we do xxxx.</li>
+<li>不同章节的方法的主语需要不断变换</li>
+<li>引入前人的方法的时候，Inspired of xxxxx</li>
+<li>一开始阐述方法的时候，可以将对象作为主语来阐述，也将将对象作为模型的一部分来阐述(局部和整体)</li>
+<li>说明理由的时候，还可以反向说明理由，如果采用和我们相反的方法会导致什么问题。。。</li>
+<li>首先说明要加入什么内容，之后简单阐述加入内容的特点(例如怎么训练，有哪些优点)，最后阐述加入的方式(例如concatenate,add等)</li>
 </ul>
 
       
@@ -464,6 +514,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/10/NER相关的概念/" rel="prev" title="NER相关的概念">
+                NER相关的概念 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -542,7 +596,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -607,7 +661,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#好词好句"><span class="nav-number">1.1.</span> <span class="nav-text">好词好句</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实验部分"><span class="nav-number">2.</span> <span class="nav-text">实验部分</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#实验数据"><span class="nav-number">2.1.</span> <span class="nav-text">实验数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实验设置"><span class="nav-number">2.2.</span> <span class="nav-text">实验设置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实验结果"><span class="nav-number">2.3.</span> <span class="nav-text">实验结果</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#通用部分"><span class="nav-number">1.</span> <span class="nav-text">通用部分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法"><span class="nav-number">3.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实验部分"><span class="nav-number">4.</span> <span class="nav-text">实验部分</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#实验数据"><span class="nav-number">4.1.</span> <span class="nav-text">实验数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实验设置"><span class="nav-number">4.2.</span> <span class="nav-text">实验设置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实验结果"><span class="nav-number">4.3.</span> <span class="nav-text">实验结果</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#逻辑方法"><span class="nav-number">4.4.</span> <span class="nav-text">逻辑方法</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -627,7 +681,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -639,7 +693,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="Site words total count">16.3k</span>
+    <span title="Site words total count">22.4k</span>
   
 </div>
 

@@ -84,7 +84,7 @@
 <meta property="og:url" content="https://wbc520wrz.cn/2019/07/17/pytorch技巧/index.html">
 <meta property="og:site_name" content="PaulPig&#39;s Blog">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-17T02:16:10.345Z">
+<meta property="og:updated_time" content="2019-10-23T13:34:01.952Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="pytorch技巧">
 
@@ -332,8 +332,8 @@
                 <i class="fa fa-calendar-check-o"></i>
               </span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2019-07-17T10:16:10+08:00">
-                2019-07-17
+              <time title="Post modified" itemprop="dateModified" datetime="2019-10-23T21:34:01+08:00">
+                2019-10-23
               </time>
             
           </span>
@@ -358,7 +358,7 @@
                 </span>
                 
                 <span title="Words count in article">
-                  0
+                  115
                 </span>
               
 
@@ -396,6 +396,19 @@
         <div class="note default"></div>
 <a id="more"></a>
 <hr>
+<h4 id="技巧"><a href="#技巧" class="headerlink" title="技巧"></a>技巧</h4><ul>
+<li><p>只计算部分tokens，将无关tokens mask设置为-9999999</p>
+</li>
+<li><p>将索引矩阵转化为one-hot矩阵, torch.eye + torch.index_select: 从对角矩阵中选择index对应的one-hot形式。</p>
+</li>
+<li><p>hinge loss funciton:</p>
+<ol>
+<li>选择ground-truth对应的token的值, torch.gather</li>
+<li>选择次大的token对应的值,先将ground-truth转化为one-hot, 之后将one-hot转化为-9999999,最后获取次大值</li>
+<li>将上述两者的值相减g 再加入margin的值</li>
+</ol>
+</li>
+</ul>
 
       
     </div>
@@ -484,8 +497,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -502,7 +524,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -558,6 +580,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#技巧"><span class="nav-number">1.</span> <span class="nav-text">技巧</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -571,7 +609,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -583,7 +621,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="Site words total count">16.3k</span>
+    <span title="Site words total count">22.4k</span>
   
 </div>
 

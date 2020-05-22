@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="PaulPig&#39;s Blog">
 <meta property="og:description" content="记录os模块,sys模块,pandas模块的常用方法.">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-09T13:03:20.879Z">
+<meta property="og:updated_time" content="2020-02-03T14:59:35.920Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python3常用模块介绍">
 <meta name="twitter:description" content="记录os模块,sys模块,pandas模块的常用方法.">
@@ -336,8 +336,8 @@
                 <i class="fa fa-calendar-check-o"></i>
               </span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2019-08-09T21:03:20+08:00">
-                2019-08-09
+              <time title="Post modified" itemprop="dateModified" datetime="2020-02-03T22:59:35+08:00">
+                2020-02-03
               </time>
             
           </span>
@@ -382,7 +382,7 @@
                 </span>
                 
                 <span title="Words count in article">
-                  1,817
+                  2,058
                 </span>
               
 
@@ -396,7 +396,7 @@
                 </span>
                 
                 <span title="Reading time">
-                  7
+                  8
                 </span>
               
             </div>
@@ -496,6 +496,8 @@
 </blockquote>
 <ul>
 <li>df.groupby(‘column_name’).sum(): 按照column_name将’A’列中相同的值组合一起，之后对每个组中的值进行相加操作, 与mysql的groupby类似.</li>
+<li>df.merge 和 concat的区别在于merge指定相同的key进行合并(只减不增)，而concat是扩展dataframe.(只增不减)</li>
+<li>pd.melt: 融合, 可以将column names融合为数据.</li>
 </ul>
 <h5 id="读取和存储数据"><a href="#读取和存储数据" class="headerlink" title="读取和存储数据"></a>读取和存储数据</h5><ul>
 <li>df.csv(‘xxx.csv’): 写入xxx.csv </li>
@@ -512,6 +514,11 @@
 <li>df.set_index([a,b,c]): 将某列设置为index(行索引)</li>
 <li>df.stack(): 从”表格结构”(行列都有索引)变成”树状结构”(行的多重索引)</li>
 <li>df.unstack(level=): 与stack()相反, 其中level表示需要转化为column的索引，例如0表示第一层的index转化为column </li>
+<li>df.groupby(id):按照id将dataframe进行group</li>
+<li>df.agg():在指定的维度上执行一个或者多个操作</li>
+</ul>
+<h5 id="Series操作"><a href="#Series操作" class="headerlink" title="Series操作"></a>Series操作</h5><ul>
+<li>map: 通过字典将数据进行替换. new_series = series.map(dict)</li>
 </ul>
 <h4 id="os-模块"><a href="#os-模块" class="headerlink" title="os 模块"></a>os 模块</h4><blockquote>
 <p>This module provides a portable way of using operating system dependent functionality.</p>
@@ -634,6 +641,17 @@
 </tr>
 </tbody>
 </table>
+<h4 id="time模块"><a href="#time模块" class="headerlink" title="time模块"></a>time模块</h4><p>在此模块中存在一个纪元时间为1970.1.1 00:00:00(UTC)</p>
+<ul>
+<li><code>struct_time</code>数据结构: a named tuple. (tm_year,tm_mon,…)</li>
+<li>mktime():  将<code>本地的struct_time</code>转化为自从纪元以来的秒数,也就是当前时间点减去纪元时间点，之后转化为秒数 </li>
+<li>localtime(): 和mktime()方法的作用相反</li>
+<li>calendar.timegm(): 将<code>UTC的struct_time</code>转化为从纪元以来的秒数</li>
+<li>gmtime():和calendar.timegm()作用相反</li>
+<li>strptime(): 将当前时间根据格式专户为<code>struct_time</code>,例如time.strptime(“30 Nov 00”,”%d %d %d”)</li>
+</ul>
+<h4 id="占位符"><a href="#占位符" class="headerlink" title="占位符"></a>占位符</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">path = &quot;/data&quot;</span><br><span class="line">sub_path = &quot;&#123;path&#125;/obj&quot; #/data/obj</span><br></pre></td></tr></table></figure>
+<h4 id="字典操作"><a href="#字典操作" class="headerlink" title="字典操作"></a>字典操作</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -755,7 +773,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -820,7 +838,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#python基础知识"><span class="nav-number">1.</span> <span class="nav-text">python基础知识</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pandas-模块"><span class="nav-number">2.</span> <span class="nav-text">pandas 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#创建对象"><span class="nav-number">2.1.</span> <span class="nav-text">创建对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#显示数据"><span class="nav-number">2.2.</span> <span class="nav-text">显示数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#选择数据"><span class="nav-number">2.3.</span> <span class="nav-text">选择数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缺失数据"><span class="nav-number">2.4.</span> <span class="nav-text">缺失数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基础操作"><span class="nav-number">2.5.</span> <span class="nav-text">基础操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#合并"><span class="nav-number">2.6.</span> <span class="nav-text">合并</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#组合"><span class="nav-number">2.7.</span> <span class="nav-text">组合</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#读取和存储数据"><span class="nav-number">2.8.</span> <span class="nav-text">读取和存储数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#方法"><span class="nav-number">2.9.</span> <span class="nav-text">方法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#os-模块"><span class="nav-number">3.</span> <span class="nav-text">os 模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sys-模块"><span class="nav-number">4.</span> <span class="nav-text">sys 模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#argparse模块"><span class="nav-number">5.</span> <span class="nav-text">argparse模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#logging模块"><span class="nav-number">6.</span> <span class="nav-text">logging模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pdg模块"><span class="nav-number">7.</span> <span class="nav-text">pdg模块</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#python基础知识"><span class="nav-number">1.</span> <span class="nav-text">python基础知识</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pandas-模块"><span class="nav-number">2.</span> <span class="nav-text">pandas 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#创建对象"><span class="nav-number">2.1.</span> <span class="nav-text">创建对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#显示数据"><span class="nav-number">2.2.</span> <span class="nav-text">显示数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#选择数据"><span class="nav-number">2.3.</span> <span class="nav-text">选择数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缺失数据"><span class="nav-number">2.4.</span> <span class="nav-text">缺失数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基础操作"><span class="nav-number">2.5.</span> <span class="nav-text">基础操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#合并"><span class="nav-number">2.6.</span> <span class="nav-text">合并</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#组合"><span class="nav-number">2.7.</span> <span class="nav-text">组合</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#读取和存储数据"><span class="nav-number">2.8.</span> <span class="nav-text">读取和存储数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#方法"><span class="nav-number">2.9.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Series操作"><span class="nav-number">2.10.</span> <span class="nav-text">Series操作</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#os-模块"><span class="nav-number">3.</span> <span class="nav-text">os 模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sys-模块"><span class="nav-number">4.</span> <span class="nav-text">sys 模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#argparse模块"><span class="nav-number">5.</span> <span class="nav-text">argparse模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#logging模块"><span class="nav-number">6.</span> <span class="nav-text">logging模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pdg模块"><span class="nav-number">7.</span> <span class="nav-text">pdg模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#time模块"><span class="nav-number">8.</span> <span class="nav-text">time模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#占位符"><span class="nav-number">9.</span> <span class="nav-text">占位符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字典操作"><span class="nav-number">10.</span> <span class="nav-text">字典操作</span></a></li></ol></div>
             
 
           </div>
@@ -840,7 +858,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -852,7 +870,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="Site words total count">16.3k</span>
+    <span title="Site words total count">22.4k</span>
   
 </div>
 
